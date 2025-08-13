@@ -18,7 +18,10 @@ jobs:
           echo "PATH=$HOME/bin:$PATH" >> $GITHUB_ENV
 
       - name: Create crowdin project
+        uses: crowdin/github-action@v2
+        with:
+          command: "project add"
+          command_args: '"${GITHUB_REPOSITORY#*/}" -l fr -l es-ES'
         env:
           CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
-        run: |
-          crowdin project add "${GITHUB_REPOSITORY#*/}" -l fr -l es-ES --token "$CROWDIN_API_TOKEN"
+          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
