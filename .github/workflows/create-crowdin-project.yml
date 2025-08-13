@@ -20,8 +20,7 @@ jobs:
       - name: Create crowdin project
         uses: crowdin/github-action@v2
         with:
-          command: 'project add'
+          command: "project add"
           command_args: '"${GITHUB_REPOSITORY#*/}" -l fr -l es-ES'
         env:
-          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
