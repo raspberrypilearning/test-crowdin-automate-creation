@@ -7,11 +7,18 @@ jobs:
   crowdin-create:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Crowdin CLI
+        run: |
+          curl -L https://github.com/crowdin/crowdin-cli/releases/latest/download/crowdin-cli.zip -o crowdin-cli.zip
+          unzip crowdin-cli.zip -d crowdin-cli
+          mkdir -p ~/bin
+          mv crowdin-cli/*/crowdin ~/bin/crowdin
+          cp crowdin-cli/*/crowdin-cli.jar ~/bin/crowdin-cli.jar
+          chmod +x ~/bin/crowdin
+          echo "PATH=$HOME/bin:$PATH" >> $GITHUB_ENV
+
       - name: Create crowdin project
-        uses: crowdin/github-action@v2
-        with:
-          command: "project add"
-          command_args: '"${GITHUB_REPOSITORY#*/}" -l fr -l es-ES'
         env:
-          CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
+          CROWDIN_API_TOKEN: ${{ secrets.CROWDIN_API_TOKEN }}
+        run: |
+          crowdin project add "${GITHUB_REPOSITORY#*/}" -l fr -l es-ES --token "$CROWDIN_API_TOKEN"
