@@ -1,4 +1,4 @@
-name: Crowdin Hide Strings
+name: Create Crowdin project
 
 on:
   workflow_dispatch:
